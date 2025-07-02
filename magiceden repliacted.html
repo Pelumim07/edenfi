@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NFT Launchpad</title>
+    <script src="tailwind.js"></script>
+        <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f0f13;
+            color: #fff;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #1e1e2e 0%, #121218 100%);
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .countdown-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 8px 12px;
+            min-width: 50px;
+            text-align: center;
+        }
+
+        .progress-bar {
+            height: 8px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+            background: linear-gradient(90deg, #8a2be2 0%, #4b00ff 100%);
+        }
+
+        .nav-link {
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #8a2be2 0%, #4b00ff 100%);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .active-nav::after {
+            width: 100%;
+        }
+
+        .mobile-menu {
+            transition: all 0.3s ease;
+            max-height: 0;
+            overflow: hidden;
+        }
+
+        .mobile-menu.open {
+            max-height: 500px;
+        }
+
+        .hero-gradient {
+            background: linear-gradient(135deg, rgba(30, 30, 46, 0.8) 0%, rgba(18, 18, 24, 0.8) 100%),
+                url('https://images.unsplash.com/photo-1639762681057-408e52192e55?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2232&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .blur-filter {
+            backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="gradient-bg border-b border-gray-800 fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <img class="h-8 w-auto" src="images/large.png" alt="Logo">
+                    </div>
+                    <div class="hidden md:block ml-10">
+                        <div class="flex space-x-8">
+                            <a href=""
+                                class="nav-link active-nav text-white px-3 py-2 text-sm font-medium">Launchpad</a>
+                            <a href="marketplace.html"
+                                class="nav-link text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">Marketplace</a>
+                            <a href=""
+                                class="nav-link text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">Collections</a>
+                            <a href="stats.html"
+                                class="nav-link text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">Stats</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="hidden md:block">
+                    <div class="flex items-center space-x-4">
+                        <button
+                            class="bg-gradient-to-r from-purple-600 to-blue-500 text-white px-4 py-2 rounded-md text-sm font-medium hover:opacity-90 transition">
+                            Connect Wallet
+                        </button>
+                        <button class="text-gray-300 hover:text-white">
+                            <i class="fas fa-bell text-xl"></i>
+                        </button>
+                        <button class="text-gray-300 hover:text-white">
+                            <i class="fas fa-user-circle text-xl"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" class="text-gray-300 hover:text-white focus:outline-none">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="mobile-menu md:hidden gradient-bg border-t border-gray-800">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#" class="block px-3 py-2 text-white font-medium">Launchpad</a>
+                <a href="#" class="block px-3 py-2 text-gray-300 hover:text-white">Marketplace</a>
+                <a href="#" class="block px-3 py-2 text-gray-300 hover:text-white">Collections</a>
+                <a href="#" class="block px-3 py-2 text-gray-300 hover:text-white">Stats</a>
+                <div class="pt-2">
+                    <button
+                        class="w-full bg-gradient-to-r from-purple-600 to-blue-500 text-white px-4 py-2 rounded-md text-sm font-medium hover:opacity-90 transition">
+                        Connect Wallet
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-gradient pt-24 pb-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">Discover the Latest NFT Drops</h1>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
+                    Get early access to exclusive NFT collections before they hit the marketplace
+                </p>
+                <div class="flex justify-center space-x-4">
+                    <button
+                        class="bg-gradient-to-r from-purple-600 to-blue-500 text-white px-6 py-3 rounded-md font-medium hover:opacity-90 transition">
+                        Explore Drops
+                    </button>
+                    <button
+                        class="bg-white text-gray-900 px-6 py-3 rounded-md font-medium hover:bg-gray-200 transition">
+                        How It Works
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- Tabs -->
+        <div class="border-b border-gray-800 mb-8">
+            <div class="flex space-x-8">
+                <button class="tab-button active pb-4 font-medium text-white border-b-2 border-purple-500">
+                    Upcoming
+                </button>
+                <button class="tab-button pb-4 font-medium text-gray-400 hover:text-white">
+                    Live
+                </button>
+                <button class="tab-button pb-4 font-medium text-gray-400 hover:text-white">
+                    Past
+                </button>
+            </div>
+        </div>
+
+        <!-- Featured Drop -->
+        <div class="gradient-bg rounded-xl p-6 mb-12 card-hover">
+            <div class="flex flex-col md:flex-row">
+                <div class="md:w-1/3 mb-6 md:mb-0 md:pr-6">
+                    <div class="relative overflow-hidden rounded-lg aspect-square"></div>
+                </div>
+            </div>
+        </div>
+</body>
+
+</html>
