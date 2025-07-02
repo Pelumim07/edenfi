@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NFT Marketplace Stats</title>
+    <script src="tailwind.js"></script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+        }
+        .stats-card {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .chart-container {
+            height: 300px;
+        }
+        .nft-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+        @media (max-width: 768px) {
+            .mobile-hidden {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-800">
+    <!-- Navbar -->
+    <nav class="gradient-bg text-white shadow-lg">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+                    <a href="" class="text-2xl font-bold flex items-center">
+                        <i class="fas fa-chart-line mr-2"></i> NFTStats
+                    </a>
+                    <div class="hidden md:flex space-x-6">
+                        <a href="#" class="hover:text-black">Stats</a>
+                        <a href="#" class="hover:text-black">Explore</a>
+                        <a href="#" class="hover:text-black">Resources</a>
+                        <a href="#" class="hover:text-black">Create</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="relative dropdown">
+                        <button class="flex items-center space-x-1 bg-white bg-opacity-20 px-4 py-2 rounded-full hover:bg-opacity-30">
+                            <i class="fas fa-wallet"></i>
+                            <span class="mobile-hidden">0x1f...3e4a</span>
+                            <i class="fas fa-chevron-down text-xs"></i>
+                        </button>
+                        <div class="dropdown-menu absolute hidden right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
+                            <a href="" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Profile</a>
+                            <a href="" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Settings</a>
+                            <a href="" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Disconnect</a>
+                        </div>
+                    </div>
+                    <button class="md:hidden text-black">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-8">
+        <!-- Stats Overview -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="stats-card rounded-xl p-6 text-white bg-black">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-sm opacity-80">Total Volume</p>
+                        <h3 class="text-2xl font-bold">$42.8M</h3>
+                    </div>
+                    <i class="fas fa-chart-pie text-xl opacity-70"></i>
+                </div>
+                <p class="text-xs mt-2 opacity-80">+12.4% from yesterday</p>
+            </div>
+            <div class="stats-card rounded-xl p-6 text-white bg-black">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-sm opacity-80">Total Sales</p>
+                        <h3 class="text-2xl font-bold">24.5K</h3>
+                    </div>
+                    <i class="fas fa-shopping-bag text-xl opacity-70"></i>
+                </div>
+                <p class="text-xs mt-2 opacity-80">+8.2% from yesterday</p>
+            </div>
+            <div class="stats-card rounded-xl p-6 text-white bg-black">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-sm opacity-80">Active Users</p>
+                        <h3 class="text-2xl font-bold">18.7K</h3>
+                    </div>
+                    <i class="fas fa-users text-xl opacity-70"></i>
+                </div>
+                <p class="text-xs mt-2 opacity-80">+5.3% from yesterday</p>
+            </div>
+            <div class="stats-card rounded-xl p-6 text-white bg-black">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-sm opacity-80">Floor Price</p>
+                        <h3 class="text-2xl font-bold">0.85 ETH</h3>
+                    </div>
+                    <i class="fas fa-tag text-xl opacity-70"></i>
+                </div>
+                <p class="text-xs mt-2 opacity-80">-2.1% from yesterday</p>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="bg-white rounded-xl shadow-md p-6 mb-8">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-bold text-gray-800">Marketplace Analytics</h2>
+                <div class="flex space-x-2">
+                    <button class="px-3 py-1 bg-gray-100 rounded-lg text-sm">24H</button>
+                    <button class="px-3 py-1 bg-blue-500 text-white rounded-lg text-sm">7D</button>
+                    <button class="px-3 py-1 bg-gray-100 rounded-lg text-sm">30D</button>
+                    <button class="px-3 py-1 bg-gray-100 rounded-lg text-sm">All</button>
+                </div>
+            </div>
+            <div class="chart-container">
+                <canvas id="volumeChart"></canvas>
+            </div>
+        </div>
+        <!--End of charts-->
+
+        <!-- Top Collections -->
+        <div class="bg-white rounded-xl shadow-md p-6 mb-8">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-bold text-gray-800">Top Collections</h2>
+                <a href="#" class="text-blue-500 text-sm font-medium">View All</a>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead>
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Collection</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Volume</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">% Change</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Floor Price</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Owners</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">1</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 h-10 w-10">
+                                        <img class="h-10 w-10 rounded-full" src="https://via.placeholder.com/40" alt="">
+                                    </div>
+                                    <div class="ml-4">
+                                        <div class="text-sm font-medium text-gray-900">Bored Ape Yacht Club</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">$2.4M</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-green-500">+14.2%</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">32.5 ETH</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">6,420</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">2</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 h-10 w-10">
+                                        <img class="h-10 w-10 rounded-full" src="https://via.placeholder.com/40" alt="">
+                                    </div>
+                                    <div class="ml-4">
+                                        <div class="text-sm font-medium text-gray-900">CryptoPunks</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">$1.8M</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-red-500">-3.7%</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">45.2 ETH</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">3,891</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">3</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 h-10 w-10">
+                                        <img class="h-10 w-10 rounded-full" src="https://via.placeholder.com/40" alt="">
+                                    </div>
+                                    <div class="ml-4">
+                                        <div class="text-sm font-medium text-gray-900">Azuki</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">$1.2M</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-green-500">+8.9%</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">12.7 ETH</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">5,231</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Trending NFTs -->
+        <div class="bg-white rounded-xl shadow-md p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-bold text-gray-800">Trending NFTs</h2>
+                <a href="" class="text-blue-500 text-sm font-medium">View All</a>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <div class="nft-card bg-white rounded-lg overflow-hidden shadow-md transition duration-300">
+                    <div class="relative">
+                        <img src="images/bored apes.webp" alt="NFT" class="w-full h-48 object-cover">
+                        <div class="absolute top-2 right-2 bg-white rounded-full p-1 shadow-sm">
+                            <i class="fas fa-heart text-red-500"></i>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="font-semibold text-gray-800">Bored Ape #1234</h3>
+                                <p class="text-xs text-gray-500">Bored Ape Yacht Club</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-xs text-gray-500">Price</p>
+                                <p class="font-bold text-blue-500">2.5 ETH</p>
+                            </div>
+                        </div>
+                        <div class="mt-3 flex justify-between items-center">
+                            <div class="flex items-center">
+                                <img src="images/bored apes.webp" alt="Owner" class="w-5 h-5 rounded-full">
+                                <span class="ml-1 text-xs text-gray-600">@collector</span>
+                            </div>
+                            <button class="text-xs bg-blue-500 text-white px-3 py-1 rounded-full">Buy Now</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="nft-card bg-white rounded-lg overflow-hidden shadow-md transition duration-300">
+                    <div class="relative">
+                        <img src="https://via.placeholder.com/300x300" alt="NFT" class="w-full h-48 object-cover">
+                        <div class="absolute top-2 right-2 bg-white rounded-full p-1 shadow-sm">
+                            <i class="far fa-heart text-gray-500"></i>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="font-semibold text-gray-800">CryptoPunk #5678</h3>
+                                <p class="text-xs text-gray-500">CryptoPunks</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-xs text-gray-500">Price</p>
+                                <p class="font-bold text-blue-500">45.0 ETH</p>
+                            </div>
+                        </div>
+                        <div class="mt-3 flex justify-between items-center">
+                            <div class="flex items-center">
+                                <img src="https://via.placeholder.com/20" alt="Owner" class="w-5 h-5 rounded-full">
+                                <span class="ml-1 text-xs text-gray-600">@punklover</span>
+                            </div>
+                            <button class="text-xs bg-blue-500 text-white px-3 py-1 rounded-full">Buy Now</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="nft-card bg-white rounded-lg overflow-hidden shadow-md transition duration-300">
+                    <div class="relative">
+                        <img src="https://via.placeholder.com/300x300" alt="NFT" class="w-full h-48 object-cover">
+                        <div class="absolute top-2 right-2 bg-white rounded-full p-1 shadow-sm">
+                            <i class="far fa-heart text-gray-500"></i>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="font-semibold text-gray-800">Azuki #9012</h3>
+                                <p class="text-xs text-gray-500">Azuki</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-xs text-gray-500">Price</p>
+                                <p class="font-bold text-blue-500">12.8 ETH</p>
+                            </div>
+                        </div>
+                        <div class="mt-3 flex justify-between items-center">
+                            <div class="flex items-center">
+                                <img src="https://via.placeholder.com/20" alt="Owner" class="w-5 h-5 rounded-full">
+                                <span class="ml-1 text-xs text-gray-600">@animefan</span>
+                            </div>
+                            <button class="text-xs bg-blue-500 text-white px-3 py-1 rounded-full">Buy Now</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="nft-card bg-white rounded-lg overflow-hidden shadow-md transition duration-300">
+                    <div class="relative">
+                        <img src="images/bored apes.webp" alt="NFT" class="w-full h-48 object-cover">
+                        <div class="absolute top-2 right-2 bg-white rounded-full p-1 shadow-sm">
+                            <i class="fas fa-heart text-red-500"></i>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="font-semibold text-gray-800">Doodle #3456</h3>
+                                <p class="text-xs text-gray-500">Doodles</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-xs text-gray-500">Price</p>
+                                <p class="font-bold text-blue-500">5.2 ETH</p>
+                            </div>
+                        </div>
+                        <div class="mt-3 flex justify-between items-center">
+                            <div class="flex items-center">
+                                <img src="images/bored apes.webp" alt="Owner" class="w-5 h-5 rounded-full">
+                                <span class="ml-1 text-xs text-gray-600">@artcollector</span>
+                            </div>
+                            <button class="text-xs bg-blue-500 text-white px-3 py-1 rounded-full">Buy Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">NFTStats</h3>
+                    <p class="text-gray-400">The world's first and largest digital marketplace for crypto collectibles and non-fungible tokens (NFTs).</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Marketplace</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">All NFTs</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Art</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Collectibles</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Domain Names</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">My Account</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Profile</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Favorites</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Watchlist</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">My Collections</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Resources</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Help Center</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Platform Status</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Partners</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Blog</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400">© 2025 NFTStats. All rights reserved.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-discord"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-telegram"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Volume Chart
+        const ctx = document.getElementById('volumeChart').getContext('2d');
+        const volumeChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                datasets: [{
+                    label: 'Volume (ETH)',
+                    data: [12, 19, 15, 27, 23, 18, 31],
+                    backgroundColor: 'rgba(167, 119, 227, 0.2)',
+                    borderColor: 'rgba(167, 119, 227, 1)',
+                    borderWidth: 2,
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.05)'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+
+        // Mobile menu toggle
+        document.querySelector('.md\\:hidden').addEventListener('click', function() {
+            const menu = document.querySelector('.md\\:flex');
+            menu.classList.toggle('hidden');
+            menu.classList.toggle('flex');
+            menu.classList.toggle('flex-col');
+            menu.classList.toggle('absolute');
+            menu.classList.toggle('top-16');
+            menu.classList.toggle('left-0');
+            menu.classList.toggle('right-0');
+            menu.classList.toggle('bg-gray-900');
+            menu.classList.toggle('p-4');
+            menu.classList.toggle('space-y-4');
+            menu.classList.toggle('space-x-6');
+        });
+    </script>
+</body>
+</html>
